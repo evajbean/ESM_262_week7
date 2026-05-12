@@ -1,0 +1,114 @@
+---
+title: "more.looping.practice"
+format: pdf
+editor: visual
+---
+
+```{r}
+
+#| label: libraries
+#| echo: false
+#| messages: false
+
+library(usethis)
+library(tidyverse)
+library(janitor)
+library(here)
+library(ggplot2)
+
+
+```
+```{r}
+
+#| label: nested-loops
+#| echo: true
+
+ntime <- 5
+nlocation <- 3
+
+creature.obs <- matrix(sample(1:10, ntime*nlocation, replace=TRUE), nrow=nlocation, ncol=ntime)
+colnames(creature.obs)<- c("time1","time2","time3","time4","time5")
+rownames(creature.obs)<- c("east", "west", "north")
+
+str(creature.obs)
+
+creature.obs
+
+totalsum <- 0
+
+for(l in 1:nlocation){
+  for(t in 1:ntime){
+    totalsum = totalsum+creature.obs[l,t]
+    cat(sprintf("\nfor counter l=%d t=%d, location: %s, time: %s, sum so far: %s", l, t, rownames(creature.obs)[l], colnames(creature.obs)[t], totalsum))
+  }
+}
+
+```
+```{r}
+#| label: more-complex
+#| echo: true
+
+nobs <- 4
+nlocation <- 5
+creatureobs = matrix(runif(nobs*nlocation, min=0, max=100), nrow=nlocation)
+
+str(creatureobs)
+
+creatureobs
+
+hunting_speed <- 60
+num_hunting_speeds <- 0
+
+for (l in 1:nlocation){
+  for (o in 1:nobs){
+    num_hunting_speeds = num_hunting_speeds+ifelse(creatureobs[l,o]>=hunting_speed, 1, 0)
+  }
+}
+
+num_hunting_speeds
+
+```
+
+```{r}
+#| label: even-more-complex
+#| echo: true
+
+hunting_speed <- 60
+same_hunting_speeds <- 0
+
+for (l in 1:(nlocation-1)){
+  for (o in 1:nobs){
+    if (creatureobs[l,o] >= hunting_speed & creatureobs[l+1, o] > hunting_speed) {
+      checkneigh=1
+    } else{
+      checkneigh=0
+    }
+    same_hunting_speeds=same_hunting_speeds+checkneigh
+  }
+}
+
+same_hunting_speeds
+```
+
+```{r}
+
+#| label: while-loops
+#| echo: true
+
+pol.in <- 10
+pol.out.base <- 5
+threshold <- 100
+pollution_level <- 0
+day <- 0
+
+maxday <- 365
+
+while ((pollution_level < threshold) && (day < maxday)){
+  airtemp = rnorm(mean=20, sd=5, n=1)
+  pol.out <- pol.out.base*(1+0.01*airtemp)
+  pollution_level = pollution_level+pol.in-pol.out
+  day=day + 1
+}
+
+cat(sprintf("It takes %s days for pollution to exeed the threshold of %d, final level: %.1f", day, threshold, pollution_level))
+```
