@@ -1,0 +1,43 @@
+---
+title: "lists_practice"
+author: "Eva Juengling Bean"
+format: html
+editor: visual
+---
+
+```{r}
+#| lable: libraries
+#| echo: false
+#| message: false
+#| warnings: false
+
+library(tidyverse)
+library(janitor)
+library(here)
+library(ggplot2)
+library(usethis)
+
+```
+
+```{r}
+#| label: lists-and-functions
+#| echo: true
+
+source(here("simpson_div_amended.R"))
+
+species <- as.factor(c("squirrel", "gopher", "snake", "rabbit", "snail"))
+
+catch.1 <- sample(species, size=10, prob=c(0.75, 0.05, 0.1, 0.05, 0.05), replace=TRUE)
+
+catch.2 <- sample(species, size=10, prob=c(0.2, 0.2, 0.2, 0.2, 0.2), replace=TRUE)
+
+d.1 <- simpson.div(catch.1)
+d.2 <- simpson.div(catch.2)
+
+d.1
+d.2
+
+summary(as.factor(catch.2))
+
+```
+
