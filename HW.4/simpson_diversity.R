@@ -8,8 +8,8 @@
 # param: N is the total number of species
 # return: diversity value (D)
 
-simpson.div <- function(n_i, N){
-  species.specific.div = (n_i/N)^2
-  div = sum(species.specific.div)
-  return(div)
+simpson.div <- function(n_i){
+  N = sum(n_i)
+  D = sum((n_i/N)^2)
+  return(D)
 }

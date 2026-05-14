@@ -10,17 +10,22 @@ editor: visual
 #| echo: false
 #| messages: false
 
+rm(list=ls())
 library(here)
 library(tidyverse)
 library(ggplot2)
 library(janitor)
 ```
 
-##Simpson Diversity Function
+***Simpson Diversity Function***
 
 This function calculates the biodiversity index of a specific area, given the total number of species and the number of individuals in each species. Lower index values are associated with lower diversity.
 
-param (input): n_i is the number of individuals of each species param (input): N is the total number of species output/return: diversity value (D)
+param (input): n_i is the number of individuals of each species
+
+param (input): N is the total number of species
+
+output/return: diversity value (D)
 
 ```{r}
 #| label: function
@@ -32,13 +37,6 @@ obs <- sample(1:100, 5)
 
 data <- data.frame(species, obs)
 
-# because this function is a sum of the values associated with each species, I
-# decided to run the function in a for loop :)
+simpson.div(n_i=data$obs)
 
-for (i in 1:length(species)){
-  simpson.div(n_i=data$obs[i], N=sum(data$obs))
-}
-
-# return output
-div
 ```
